@@ -15,7 +15,7 @@ public class MouseLook : MonoBehaviour
 
     void Update()
     {
-        Vector2 lookInput = gameInput.PlaerLook();
+        Vector2 lookInput = gameInput.PlayerLook();
 
         float mouseX = lookInput.x * mouseSensitivity * Time.deltaTime;
         float mouseY = lookInput.y * mouseSensitivity * Time.deltaTime;

@@ -10,8 +10,7 @@ public class GameInput : MonoBehaviour
     {
         inputActions = new InputActions();
 
-        inputActions.Player.Move.Enable();
-        inputActions.Player.Look.Enable();
+        inputActions.Player.Enable();
     }
 
     public Vector2 PlayerMovementNormalized()
@@ -21,8 +20,13 @@ public class GameInput : MonoBehaviour
         return inputVec;
     }
 
-    public Vector2 PlaerLook()
+    public Vector2 PlayerLook()
     {
         return inputActions.Player.Look.ReadValue<Vector2>();
+    }
+
+    public bool ShiftIsPressed()
+    {
+        return inputActions.Player.Run.IsPressed();
     }
 }
