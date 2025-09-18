@@ -6,6 +6,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private GameInput gameInput;
     [SerializeField] private Camera playerCamera;
     [SerializeField] private AudioManager audioManager;
+    [SerializeField] private CapsuleCollider capsuleCollider;
     [SerializeField] private float defaultMoveSpeed = 5f;
     [SerializeField] private float shiftMoveSpeed = 8f;
     [SerializeField] private float crouchedMoveSpeed = 3f;
@@ -19,20 +20,23 @@ public class PlayerMove : MonoBehaviour
     private Vector3 camOffset;
     private bool isCrouched;
 
-    private enum State { Walking, Running };
+    private enum State { Walking, Running, Standing };
     private State currentState;
 
     private void Start()
     {
         camOffset = playerCamera.transform.localPosition;
         isCrouched = false;
+        currentState = State.Standing;
+
+        gameInput.OnCrouchPress += OnCrouchPress;
     }
 
     private void Update()
     {
         HandleBob();
         HandleWalkingAudio();
-        CheckCrouch();
+        SetPlayerMoveState();
     }
 
     private void FixedUpdate()
@@ -41,6 +45,22 @@ public class PlayerMove : MonoBehaviour
     }
 
     private void MovePlayer()
+    {
+        Vector2 moveDir = gameInput.PlayerMovementNormalized();
+
+        Vector3 moveVec = new Vector3(moveDir.x, 0f, moveDir.y);
+        moveVec = transform.TransformDirection(moveVec);
+
+        velocity = rb.linearVelocity;
+        velocity.x = moveVec.x * moveSpeed;
+        velocity.z = moveVec.z * moveSpeed;
+
+
+
+        rb.linearVelocity = velocity;
+    }
+
+    private void SetPlayerMoveState()
     {
         if (gameInput.ShiftIsPressed())
         {
@@ -63,21 +83,15 @@ public class PlayerMove : MonoBehaviour
             currentState = State.Walking;
         }
 
-        Vector2 moveDir = gameInput.PlayerMovementNormalized();
-
-        Vector3 moveVec = new Vector3(moveDir.x, 0f, moveDir.y);
-        moveVec = transform.TransformDirection(moveVec);
-
-        velocity = rb.linearVelocity;
-        velocity.x = moveVec.x * moveSpeed;
-        velocity.z = moveVec.z * moveSpeed;
-
-        rb.linearVelocity = velocity;
+        if (rb.linearVelocity.magnitude <= 0.1f)
+        {
+            currentState = State.Standing;
+        }
     }
 
     private void HandleBob()
     {
-        if (currentState == State.Running && !isCrouched)
+        if (currentState == State.Running && !isCrouched && !(currentState == State.Standing))
         {
             float bob = Mathf.Sin(Time.time * camBobSpeed) * maxCamBob;
             playerCamera.transform.localPosition = camOffset + new Vector3(0, bob, 0);
@@ -90,33 +104,31 @@ public class PlayerMove : MonoBehaviour
 
     private void HandleWalkingAudio()
     {
-        bool isMoving = rb.linearVelocity.magnitude > 0.1f;
+        bool isMoving = !(currentState == State.Standing);
         bool isWalking = currentState == State.Walking && isMoving;
         bool isRunning = currentState == State.Running && isMoving && !isCrouched;
 
         audioManager.PlayWalkSound(isWalking, isRunning);
     }
 
-    private void CheckCrouch()
+    private void OnCrouchPress()
     {
-        if (gameInput.CrouchWasPressed())
+        if (!isCrouched)
         {
-            if (!isCrouched)
+            isCrouched = true;
+            transform.localScale = new Vector3(transform.localScale.x, 0.5f, transform.localScale.z);
+            transform.position = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z);
+            moveSpeed = crouchedMoveSpeed;
+        }
+        else
+        {
+            if (!Physics.SphereCast(transform.position, radius, Vector3.up, out RaycastHit hit, uncroachRayDistance))
             {
-                isCrouched = true;
-                gameObject.transform.localScale = new Vector3(transform.localScale.x, 0.5f, transform.localScale.z);
-                gameObject.transform.position = new Vector3(transform.position.x, transform.position.y  - 0.5f, transform.position.z);
-                moveSpeed = crouchedMoveSpeed;
-            }
-            else
-            {
-                if (!Physics.SphereCast(transform.position, radius, Vector3.up, out RaycastHit hit, uncroachRayDistance))
-                {
-                    isCrouched = false;
-                    gameObject.transform.localScale = new Vector3(transform.localScale.x, 1f, transform.localScale.z);
-                    gameObject.transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
-                    moveSpeed = defaultMoveSpeed;
-                }
+                isCrouched = false;
+                transform.localScale = new Vector3(transform.localScale.x, 1f, transform.localScale.z);
+                transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+                capsuleCollider.height = 2;
+                moveSpeed = defaultMoveSpeed;
             }
         }
     }

@@ -4,13 +4,21 @@ using UnityEngine.InputSystem;
 
 public class GameInput : MonoBehaviour
 {
+    public event Action OnCrouchPress;
+
     private InputActions inputActions;
 
     private void Awake()
     {
         inputActions = new InputActions();
-
         inputActions.Player.Enable();
+
+        inputActions.Player.Crouch.performed += Crouch_performed;
+    }
+
+    private void Crouch_performed(InputAction.CallbackContext obj)
+    {
+        OnCrouchPress?.Invoke();
     }
 
     public Vector2 PlayerMovementNormalized()
@@ -28,10 +36,5 @@ public class GameInput : MonoBehaviour
     public bool ShiftIsPressed()
     {
         return inputActions.Player.Run.IsPressed();
-    }
-
-    public bool CrouchWasPressed()
-    {
-        return inputActions.Player.Crouch.WasPressedThisFrame();
     }
 }
