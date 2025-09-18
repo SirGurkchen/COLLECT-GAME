@@ -11,6 +11,8 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float crouchedMoveSpeed = 3f;
     [SerializeField] private float camBobSpeed = 10f;
     [SerializeField] private float maxCamBob = 0.1f;
+    [SerializeField] private float uncroachRayDistance = 3f;
+    [SerializeField] private float radius = 0.5f;
 
     private float moveSpeed;
     private Vector3 velocity;
@@ -102,16 +104,19 @@ public class PlayerMove : MonoBehaviour
             if (!isCrouched)
             {
                 isCrouched = true;
-                gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x, 0.5f, gameObject.transform.localScale.z);
-                gameObject.transform.position = new Vector3(gameObject.transform.position.x, 0.5f, gameObject.transform.position.z);
+                gameObject.transform.localScale = new Vector3(transform.localScale.x, 0.5f, transform.localScale.z);
+                gameObject.transform.position = new Vector3(transform.position.x, transform.position.y  - 0.5f, transform.position.z);
                 moveSpeed = crouchedMoveSpeed;
             }
             else
             {
-                isCrouched = false;
-                gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x, 1f, gameObject.transform.localScale.z);
-                gameObject.transform.position = new Vector3(gameObject.transform.position.x, 1f, gameObject.transform.position.z);
-                moveSpeed = defaultMoveSpeed;
+                if (!Physics.SphereCast(transform.position, radius, Vector3.up, out RaycastHit hit, uncroachRayDistance))
+                {
+                    isCrouched = false;
+                    gameObject.transform.localScale = new Vector3(transform.localScale.x, 1f, transform.localScale.z);
+                    gameObject.transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+                    moveSpeed = defaultMoveSpeed;
+                }
             }
         }
     }

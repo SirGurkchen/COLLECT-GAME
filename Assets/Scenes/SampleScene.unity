@@ -312,6 +312,8 @@ MonoBehaviour:
   crouchedMoveSpeed: 3
   camBobSpeed: 10
   maxCamBob: 0.1
+  uncroachRayDistance: 3
+  radius: 0.35
 --- !u!1001 &315704761
 PrefabInstance:
   m_ObjectHideFlags: 0
