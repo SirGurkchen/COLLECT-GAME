@@ -29,4 +29,9 @@ public class GameInput : MonoBehaviour
     {
         return inputActions.Player.Run.IsPressed();
     }
+
+    public bool CrouchWasPressed()
+    {
+        return inputActions.Player.Crouch.WasPressedThisFrame();
+    }
 }

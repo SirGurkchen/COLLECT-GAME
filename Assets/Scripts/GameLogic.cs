@@ -4,6 +4,7 @@ public class GameLogic : MonoBehaviour
 {
     [SerializeField] private UIManager uiManager;
     [SerializeField] private AudioManager audioManager;
+    [SerializeField] private GameObject player;
 
     private int collectedCoins = 0;
 
