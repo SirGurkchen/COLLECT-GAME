@@ -5,9 +5,9 @@ public class CoinLogic : MonoBehaviour
 {
     public event Action OnCoinCollect;
 
-    [SerializeField] private float rotateSpeed;
-    [SerializeField] private float floatSpeed;
-    [SerializeField] private float floatHeight;
+    [SerializeField] private float _rotateSpeed;
+    [SerializeField] private float _floatSpeed;
+    [SerializeField] private float _floatHeight;
 
     private Vector3 startPos;
 
@@ -33,12 +33,12 @@ public class CoinLogic : MonoBehaviour
 
     private void RotateCoin()
     {
-        transform.Rotate(Vector3.up, rotateSpeed * Time.deltaTime, Space.World);
+        transform.Rotate(Vector3.up, _rotateSpeed * Time.deltaTime, Space.World);
     }
 
     private void FloatCoin()
     {
-        float newY = startPos.y + Mathf.Sin(Time.time * floatSpeed) * floatHeight;
+        float newY = startPos.y + Mathf.Sin(Time.time * _floatSpeed) * _floatHeight;
         transform.position = new Vector3(startPos.x, newY, startPos.z);
     }
 

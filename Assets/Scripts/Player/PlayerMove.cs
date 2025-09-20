@@ -2,18 +2,20 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    [SerializeField] private Rigidbody rb;
-    [SerializeField] private GameInput gameInput;
-    [SerializeField] private Camera playerCamera;
-    [SerializeField] private AudioManager audioManager;
-    [SerializeField] private CapsuleCollider capsuleCollider;
-    [SerializeField] private float defaultMoveSpeed = 5f;
-    [SerializeField] private float shiftMoveSpeed = 8f;
-    [SerializeField] private float crouchedMoveSpeed = 3f;
-    [SerializeField] private float camBobSpeed = 10f;
-    [SerializeField] private float maxCamBob = 0.1f;
-    [SerializeField] private float uncroachRayDistance = 1f;
-    [SerializeField] private float radius = 0.5f;
+    [SerializeField] private Rigidbody _rb;
+    [SerializeField] private GameInput _gameInput;
+    [SerializeField] private Camera _playerCamera;
+    [SerializeField] private AudioManager _audioManager;
+    [SerializeField] private CapsuleCollider _capsuleCollider;
+    [SerializeField] private PlayerInteract interact;
+
+    [SerializeField] private float _defaultMoveSpeed = 5f;
+    [SerializeField] private float _shiftMoveSpeed = 8f;
+    [SerializeField] private float _crouchedMoveSpeed = 3f;
+    [SerializeField] private float _camBobSpeed = 10f;
+    [SerializeField] private float _maxCamBob = 0.1f;
+    [SerializeField] private float _uncroachRayDistance = 1f;
+    [SerializeField] private float _radius = 0.5f;
 
     private float moveSpeed;
     private Vector3 velocity;
@@ -25,11 +27,11 @@ public class PlayerMove : MonoBehaviour
 
     private void Start()
     {
-        camOffset = playerCamera.transform.localPosition;
+        camOffset = _playerCamera.transform.localPosition;
         isCrouched = false;
         currentState = State.Standing;
 
-        gameInput.OnCrouchPress += OnCrouchPress;
+        _gameInput.OnCrouchPress += OnCrouchPress;
     }
 
     private void Update()
@@ -46,27 +48,25 @@ public class PlayerMove : MonoBehaviour
 
     private void MovePlayer()
     {
-        Vector2 moveDir = gameInput.PlayerMovementNormalized();
+        Vector2 moveDir = _gameInput.PlayerMovementNormalized();
 
         Vector3 moveVec = new Vector3(moveDir.x, 0f, moveDir.y);
         moveVec = transform.TransformDirection(moveVec);
 
-        velocity = rb.linearVelocity;
+        velocity = _rb.linearVelocity;
         velocity.x = moveVec.x * moveSpeed;
         velocity.z = moveVec.z * moveSpeed;
 
-
-
-        rb.linearVelocity = velocity;
+        _rb.linearVelocity = velocity;
     }
 
     private void SetPlayerMoveState()
     {
-        if (gameInput.ShiftIsPressed())
+        if (_gameInput.ShiftIsPressed())
         {
             if (!isCrouched)
             {
-                moveSpeed = shiftMoveSpeed;
+                moveSpeed = _shiftMoveSpeed;
                 currentState = State.Running;
             }
             else
@@ -78,12 +78,12 @@ public class PlayerMove : MonoBehaviour
         {
             if (!isCrouched)
             {
-                moveSpeed = defaultMoveSpeed;
+                moveSpeed = _defaultMoveSpeed;
             }
             currentState = State.Walking;
         }
 
-        if (rb.linearVelocity.magnitude <= 0.1f)
+        if (_rb.linearVelocity.magnitude <= 0.1f)
         {
             currentState = State.Standing;
         }
@@ -93,12 +93,12 @@ public class PlayerMove : MonoBehaviour
     {
         if (currentState == State.Running && !isCrouched && !(currentState == State.Standing))
         {
-            float bob = Mathf.Sin(Time.time * camBobSpeed) * maxCamBob;
-            playerCamera.transform.localPosition = camOffset + new Vector3(0, bob, 0);
+            float bob = Mathf.Sin(Time.time * _camBobSpeed) * _maxCamBob;
+            _playerCamera.transform.localPosition = camOffset + new Vector3(0, bob, 0);
         }
         else
         {
-            playerCamera.transform.localPosition = camOffset;
+            _playerCamera.transform.localPosition = camOffset;
         }
     }
 
@@ -108,27 +108,32 @@ public class PlayerMove : MonoBehaviour
         bool isWalking = currentState == State.Walking && isMoving;
         bool isRunning = currentState == State.Running && isMoving && !isCrouched;
 
-        audioManager.PlayWalkSound(isWalking, isRunning);
+        _audioManager.PlayWalkSound(isWalking, isRunning);
     }
 
     private void OnCrouchPress()
     {
+        if (interact.GetHeldItem() != null)
+        {
+            return;
+        }
+
         if (!isCrouched)
         {
             isCrouched = true;
             transform.localScale = new Vector3(transform.localScale.x, 0.4f, transform.localScale.z);
             transform.position = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z);
-            moveSpeed = crouchedMoveSpeed;
+            moveSpeed = _crouchedMoveSpeed;
         }
         else
         {
-            if (!Physics.SphereCast(transform.position, radius, Vector3.up, out RaycastHit hit, uncroachRayDistance))
+            if (!Physics.SphereCast(transform.position, _radius, Vector3.up, out RaycastHit hit, _uncroachRayDistance))
             {
                 isCrouched = false;
                 transform.localScale = new Vector3(transform.localScale.x, 1f, transform.localScale.z);
                 transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
-                capsuleCollider.height = 2;
-                moveSpeed = defaultMoveSpeed;
+                _capsuleCollider.height = 2;
+                moveSpeed = _defaultMoveSpeed;
             }
         }
     }

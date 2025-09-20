@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class GameLogic : MonoBehaviour
 {
-    [SerializeField] private UIManager uiManager;
-    [SerializeField] private AudioManager audioManager;
-    [SerializeField] private GameObject player;
+    [SerializeField] private UIManager _uiManager;
+    [SerializeField] private AudioManager _audioManager;
+    [SerializeField] private GameObject _player;
 
     private int collectedCoins = 0;
 
@@ -20,7 +20,7 @@ public class GameLogic : MonoBehaviour
     private void Coin_OnCoinCollect()
     {
         collectedCoins++;
-        uiManager.RefreshCollectedCoins(collectedCoins);
-        audioManager.PlayCollectSound();
+        _uiManager.RefreshCollectedCoins(collectedCoins);
+        _audioManager.PlaySound(AudioManager.SoundType.Collect);
     }
 }
