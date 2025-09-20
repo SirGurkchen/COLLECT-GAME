@@ -12,7 +12,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float crouchedMoveSpeed = 3f;
     [SerializeField] private float camBobSpeed = 10f;
     [SerializeField] private float maxCamBob = 0.1f;
-    [SerializeField] private float uncroachRayDistance = 3f;
+    [SerializeField] private float uncroachRayDistance = 1f;
     [SerializeField] private float radius = 0.5f;
 
     private float moveSpeed;
@@ -116,7 +116,7 @@ public class PlayerMove : MonoBehaviour
         if (!isCrouched)
         {
             isCrouched = true;
-            transform.localScale = new Vector3(transform.localScale.x, 0.5f, transform.localScale.z);
+            transform.localScale = new Vector3(transform.localScale.x, 0.4f, transform.localScale.z);
             transform.position = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z);
             moveSpeed = crouchedMoveSpeed;
         }

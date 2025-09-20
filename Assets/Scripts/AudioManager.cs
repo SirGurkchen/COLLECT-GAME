@@ -12,6 +12,7 @@ public class AudioManager : MonoBehaviour
 {
     [SerializeField] private AudioSource coinCollectSource;
     [SerializeField] private AudioSource walkingAudioSource;
+    [SerializeField] private AudioSource rocksAudioSource;
     [SerializeField] private List<Sound> sounds;
 
     private Dictionary<SoundType, AudioClip> soundDic;
@@ -20,7 +21,8 @@ public class AudioManager : MonoBehaviour
     {
         Collect,
         Walk,
-        Run
+        Run,
+        Rocks
     }
 
     private void Awake()
@@ -73,5 +75,10 @@ public class AudioManager : MonoBehaviour
                 walkingAudioSource.Stop();
             }
         }
+    }
+
+    public void PlayRockSound()
+    {
+        rocksAudioSource.PlayOneShot(soundDic[SoundType.Rocks]);
     }
 }

@@ -22,7 +22,7 @@ public class CoinLogic : MonoBehaviour
         FloatCoin();
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
@@ -40,5 +40,10 @@ public class CoinLogic : MonoBehaviour
     {
         float newY = startPos.y + Mathf.Sin(Time.time * floatSpeed) * floatHeight;
         transform.position = new Vector3(startPos.x, newY, startPos.z);
+    }
+
+    private void OnDestroy()
+    {
+        OnCoinCollect = null;
     }
 }
