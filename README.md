@@ -16,9 +16,10 @@ This is a simple Unity 3D project, where the player has to go around a small map
 - Player cannot jump. This is intended and will be part of puzzles
 
 ## Planned Features
-- Add Particles to idle coins
+- Add Particles to idle coins (done)
 - Add gameplay area (mountains, bridges etc.)
 - Add Start menu Screen
 - Add Win screen
 - Add Settings menu
-- General Gameplay Featurs (e.g. a launchpad, which launches the player into the sky)
+- General Gameplay Features (e.g. a launchpad, which launches the player into the sky)
+- Interactable shovel in Hollow Hill (pick up and remove rocks when shovel is held)
