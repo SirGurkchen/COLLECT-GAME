@@ -14,6 +14,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource _walkingAudioSource;
     [SerializeField] private AudioSource _rocksAudioSource;
     [SerializeField] private AudioSource _interactAudioSource;
+    [SerializeField] private AudioSource _woodCutAudioSource;
     [SerializeField] private List<Sound> _sounds;
 
     private Dictionary<SoundType, AudioClip> _soundDic;
@@ -25,7 +26,8 @@ public class AudioManager : MonoBehaviour
         Run,
         Rocks,
         Pickup,
-        Digging
+        Digging,
+        Cutting
     }
 
     private void Awake()
@@ -90,6 +92,9 @@ public class AudioManager : MonoBehaviour
                 break;
             case SoundType.Collect:
                 _coinCollectSource.PlayOneShot(_soundDic[soundType]);
+                break;
+            case SoundType.Cutting:
+                _woodCutAudioSource.PlayOneShot(_soundDic[soundType]);
                 break;
         }
     }

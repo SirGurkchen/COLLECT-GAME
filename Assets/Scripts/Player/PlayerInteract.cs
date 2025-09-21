@@ -71,7 +71,7 @@ public class PlayerInteract : MonoBehaviour
 
         _heldObject.transform.SetParent(_holdPoint);
         _heldObject.transform.localPosition = Vector3.zero;
-        _heldObject.transform.localRotation = Quaternion.identity;
+        _heldObject.transform.localRotation = Quaternion.Euler(180, 0, 0);
 
         _audioManager.PlaySound(AudioManager.SoundType.Pickup);
     }
