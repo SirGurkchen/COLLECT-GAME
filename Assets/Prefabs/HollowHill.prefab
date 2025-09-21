@@ -2720,17 +2720,33 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7607075003133667549}
     m_Modifications:
+    - target: {fileID: 7218193092412317528, guid: 946f18319cd7f7546a5c3d11b29a8fe3, type: 3}
+      propertyPath: _outline
+      value: 
+      objectReference: {fileID: 5273686358032795541}
+    - target: {fileID: 7825471443200504179, guid: 946f18319cd7f7546a5c3d11b29a8fe3, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7825471443200504179, guid: 946f18319cd7f7546a5c3d11b29a8fe3, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7825471443200504179, guid: 946f18319cd7f7546a5c3d11b29a8fe3, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7825471443200504179, guid: 946f18319cd7f7546a5c3d11b29a8fe3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.15
       objectReference: {fileID: 0}
     - target: {fileID: 7825471443200504179, guid: 946f18319cd7f7546a5c3d11b29a8fe3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.007
+      value: 0.108
       objectReference: {fileID: 0}
     - target: {fileID: 7825471443200504179, guid: 946f18319cd7f7546a5c3d11b29a8fe3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.393
+      value: -0.319
       objectReference: {fileID: 0}
     - target: {fileID: 7825471443200504179, guid: 946f18319cd7f7546a5c3d11b29a8fe3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2760,19 +2776,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7825471443200504179, guid: 946f18319cd7f7546a5c3d11b29a8fe3, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8836923323848282033, guid: 946f18319cd7f7546a5c3d11b29a8fe3, type: 3}
       propertyPath: m_Name
       value: ShovelPrefab
       objectReference: {fileID: 0}
     - target: {fileID: 8836923323848282033, guid: 946f18319cd7f7546a5c3d11b29a8fe3, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9213245273480391084, guid: 946f18319cd7f7546a5c3d11b29a8fe3, type: 3}
+    - {fileID: 3771199886625475218, guid: 946f18319cd7f7546a5c3d11b29a8fe3, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 946f18319cd7f7546a5c3d11b29a8fe3, type: 3}
+--- !u!1 &5273686358032795541 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8402870708180469247, guid: 946f18319cd7f7546a5c3d11b29a8fe3, type: 3}
+  m_PrefabInstance: {fileID: 4445927694202274410}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5848684427056673561 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7825471443200504179, guid: 946f18319cd7f7546a5c3d11b29a8fe3, type: 3}

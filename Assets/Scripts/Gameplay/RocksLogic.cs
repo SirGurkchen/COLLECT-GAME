@@ -7,7 +7,7 @@ public class RocksLogic : MonoBehaviour, IInteract
 
     public void Interact(PlayerInteract player)
     {
-        if (player.GetHeldItem() != null && player.GetHeldItem().GetComponentInParent<ShovelLogic>() != null)
+        if (player.GetHeldItem() != null && player.GetHeldItem().GetComponentInParent<PickaxeLogic>() != null)
         {
             Destroy(this.gameObject);
             Destroy(player.GetHeldItem());
