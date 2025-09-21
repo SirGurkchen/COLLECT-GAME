@@ -10,10 +10,36 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField] private AudioManager _audioManager;
 
     private GameObject _heldObject;
+    private GameObject _lookInteractable;
+    private GameObject _previousInteractable;
 
     private void Start()
     {
         _gameInput.OnInteractPress += GameInput_OnInteractPress;
+    }
+
+    private void Update()
+    {
+        _previousInteractable = _lookInteractable;
+        _lookInteractable = null;
+
+        if (Physics.Raycast(_playerCam.transform.position, _playerCam.transform.forward, out RaycastHit hit, _interactDistance, _interactMask))
+        {
+            _lookInteractable = hit.collider.gameObject;
+        }
+
+        if (_previousInteractable != _lookInteractable)
+        {
+            if (_previousInteractable != null && _previousInteractable.TryGetComponent<IInteract>(out IInteract previousInteract))
+            {
+                previousInteract.HideOutline();
+            }
+
+            if (_lookInteractable != null && _lookInteractable.TryGetComponent<IInteract>(out IInteract currentInteract))
+            {
+                currentInteract.ShowOutline();
+            }
+        }
     }
 
     private void GameInput_OnInteractPress()

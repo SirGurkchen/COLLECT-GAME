@@ -1,6 +1,7 @@
 using UnityEngine;
+using UnityEngine.UI;
 
-public class ShovelLogic : MonoBehaviour, IInteract
+public class AxeLogic : MonoBehaviour, IInteract
 {
     [SerializeField] private GameObject _outline;
 
@@ -11,7 +12,6 @@ public class ShovelLogic : MonoBehaviour, IInteract
             player.HoldObject(this.gameObject);
         }
     }
-
     public void ShowOutline()
     {
         _outline.SetActive(true);
