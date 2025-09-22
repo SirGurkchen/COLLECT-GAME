@@ -8,6 +8,7 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField] private GameInput _gameInput;
     [SerializeField] private Transform _holdPoint;
     [SerializeField] private AudioManager _audioManager;
+    [SerializeField] private PlayerMove _player;
 
     private GameObject _heldObject;
     private GameObject _lookInteractable;
@@ -67,6 +68,11 @@ public class PlayerInteract : MonoBehaviour
         {
             rb.isKinematic = true;
             rb.detectCollisions = false;
+        }
+
+        if (_player.GetCrouched())
+        {
+            _player.SetStanding();
         }
 
         _heldObject.transform.SetParent(_holdPoint);

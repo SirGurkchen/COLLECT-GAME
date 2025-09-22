@@ -129,12 +129,22 @@ public class PlayerMove : MonoBehaviour
         {
             if (!Physics.SphereCast(transform.position, _radius, Vector3.up, out RaycastHit hit, _uncroachRayDistance))
             {
-                isCrouched = false;
-                transform.localScale = new Vector3(transform.localScale.x, 1f, transform.localScale.z);
-                transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
-                _capsuleCollider.height = 2;
-                moveSpeed = _defaultMoveSpeed;
+                SetStanding();
             }
         }
+    }
+
+    public bool GetCrouched()
+    {
+        return isCrouched;
+    }
+
+    public void SetStanding()
+    {
+        isCrouched = false;
+        transform.localScale = new Vector3(transform.localScale.x, 1f, transform.localScale.z);
+        transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+        _capsuleCollider.height = 2;
+        moveSpeed = _defaultMoveSpeed;
     }
 }
