@@ -68,7 +68,7 @@ public class PlayerInteract : MonoBehaviour
     {
         if (Physics.Raycast(_playerCam.transform.position, _playerCam.transform.forward, out RaycastHit hit, _interactDistance, _interactMask))
         {
-            var interactable = hit.collider.GetComponent<IInteract>();
+            var interactable = hit.collider.GetComponentInParent<IInteract>();
             if (interactable != null)
             {
                 interactable.Interact(this);
@@ -89,6 +89,7 @@ public class PlayerInteract : MonoBehaviour
         if (_heldObject.TryGetComponent<PistolLogic>(out PistolLogic logic))
         {
             _heldObject.transform.SetParent(_pistolPoint);
+            _shootLogic.ActivateGunUI();
         }
         else
         {
