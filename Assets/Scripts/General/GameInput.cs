@@ -6,6 +6,7 @@ public class GameInput : MonoBehaviour
 {
     public event Action OnCrouchPress;
     public event Action OnInteractPress;
+    public event Action OnShoot;
 
     private InputActions _inputActions;
 
@@ -16,6 +17,12 @@ public class GameInput : MonoBehaviour
 
         _inputActions.Player.Crouch.performed += Crouch_performed;
         _inputActions.Player.Interact.performed += Interact_performed;
+        _inputActions.Player.Shoot.performed += Shoot_performed;
+    }
+
+    private void Shoot_performed(InputAction.CallbackContext obj)
+    {
+        OnShoot?.Invoke();
     }
 
     private void Interact_performed(InputAction.CallbackContext obj)

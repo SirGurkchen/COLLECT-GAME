@@ -7,8 +7,10 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField] private float _interactDistance = 1.5f;
     [SerializeField] private GameInput _gameInput;
     [SerializeField] private Transform _holdPoint;
+    [SerializeField] private Transform _pistolPoint;
     [SerializeField] private AudioManager _audioManager;
     [SerializeField] private PlayerMove _player;
+    [SerializeField] private PlayerShoot _shootLogic;
 
     private GameObject _heldObject;
     private GameObject _lookInteractable;
@@ -17,9 +19,15 @@ public class PlayerInteract : MonoBehaviour
     private void Start()
     {
         _gameInput.OnInteractPress += GameInput_OnInteractPress;
+        _gameInput.OnShoot += _gameInput_OnShoot;
     }
 
     private void Update()
+    {
+        HandleInteractOutline();
+    }
+
+    private void HandleInteractOutline()
     {
         _previousInteractable = _lookInteractable;
         _lookInteractable = null;
@@ -40,6 +48,14 @@ public class PlayerInteract : MonoBehaviour
             {
                 currentInteract.ShowOutline();
             }
+        }
+    }
+
+    private void _gameInput_OnShoot()
+    {
+        if (_heldObject != null && _heldObject.TryGetComponent<PistolLogic>(out PistolLogic logic))
+        {
+            _shootLogic.Shoot(_audioManager, _playerCam);
         }
     }
 
@@ -70,12 +86,20 @@ public class PlayerInteract : MonoBehaviour
             rb.detectCollisions = false;
         }
 
+        if (_heldObject.TryGetComponent<PistolLogic>(out PistolLogic logic))
+        {
+            _heldObject.transform.SetParent(_pistolPoint);
+        }
+        else
+        {
+            _heldObject.transform.SetParent(_holdPoint);
+        }
+
         if (_player.GetCrouched())
         {
             _player.SetStanding();
         }
 
-        _heldObject.transform.SetParent(_holdPoint);
         _heldObject.transform.localPosition = Vector3.zero;
         _heldObject.transform.localRotation = Quaternion.Euler(180, 0, 0);
 

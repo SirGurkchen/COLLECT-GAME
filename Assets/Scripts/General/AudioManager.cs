@@ -27,7 +27,8 @@ public class AudioManager : MonoBehaviour
         Rocks,
         Pickup,
         Digging,
-        Cutting
+        Cutting,
+        Shooting
     }
 
     private void Awake()
@@ -87,6 +88,7 @@ public class AudioManager : MonoBehaviour
             case SoundType.Digging:
                 _rocksAudioSource.PlayOneShot(_soundDic[soundType]);
                 break;
+            case SoundType.Shooting:
             case SoundType.Pickup:
                 _interactAudioSource.PlayOneShot(_soundDic[soundType]);
                 break;
