@@ -3,12 +3,11 @@ using UnityEngine;
 
 public class PlayerShoot : MonoBehaviour
 {
-    public event Action OnBucketHit;
-
     [SerializeField] private UIManager _uiManager;
     [SerializeField] private float _shootDistance = 20f;
     [SerializeField] private int _maxAmmo = 7;
     [SerializeField] private LayerMask _bucketMask;
+    [SerializeField] private GameLogic _gameLogic;
 
     private int currentAmmo;
 
@@ -30,7 +29,7 @@ public class PlayerShoot : MonoBehaviour
             {
                 if (hit.collider.gameObject.layer == BUCKET_MASK_NUMBER)
                 {
-                    OnBucketHit?.Invoke();
+                    _gameLogic.DestroyBucket(hit.collider.gameObject);
                 }
                 else
                 {
