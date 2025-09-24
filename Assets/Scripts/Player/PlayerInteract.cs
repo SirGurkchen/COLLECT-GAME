@@ -16,10 +16,14 @@ public class PlayerInteract : MonoBehaviour
     private GameObject _lookInteractable;
     private GameObject _previousInteractable;
 
-    private void Start()
+    private void OnEnable()
     {
         _gameInput.OnInteractPress += GameInput_OnInteractPress;
-        _gameInput.OnShoot += _gameInput_OnShoot;
+    }
+
+    private void OnDisable()
+    {
+        _gameInput.OnInteractPress -= GameInput_OnInteractPress;
     }
 
     private void Update()
@@ -48,14 +52,6 @@ public class PlayerInteract : MonoBehaviour
             {
                 currentInteract.ShowOutline();
             }
-        }
-    }
-
-    private void _gameInput_OnShoot()
-    {
-        if (_heldObject != null && _heldObject.TryGetComponent<PistolLogic>(out PistolLogic logic))
-        {
-            _shootLogic.Shoot(_audioManager, _playerCam);
         }
     }
 

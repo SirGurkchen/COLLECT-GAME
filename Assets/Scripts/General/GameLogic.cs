@@ -36,4 +36,15 @@ public class GameLogic : MonoBehaviour
         _coinsList.Add(coin);
         coin.OnCoinCollect += Coin_OnCoinCollect;
     }
+
+    private void OnDisable()
+    {
+        if (_coinsList == null) return;
+
+        foreach (var coin in _coinsList)
+        {
+            if (coin != null)
+                coin.OnCoinCollect -= Coin_OnCoinCollect;
+        }
+    }
 }

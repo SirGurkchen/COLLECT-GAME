@@ -11,35 +11,48 @@ public class PlayerShoot : MonoBehaviour
     [SerializeField] private LayerMask _bucketMask;
     [SerializeField] private GameLogic _gameLogic;
     [SerializeField] private PlayerInteract _interact;
+    [SerializeField] private GameInput _gameInput;
+    [SerializeField] private AudioManager _audioManager;
+    [SerializeField] private Camera _playerCam;
 
     private int currentAmmo;
-
-    private const int BUCKET_MASK_NUMBER = 9;
 
     private void Start()
     {
         currentAmmo = _maxAmmo;
+
+        _gameInput.OnShoot += _gameInput_OnShoot;
+        _gameInput.OnReloadPress += _gameInput_OnReloadPress;
     }
 
-    public void Shoot(AudioManager audio, Camera cam)
+    private void _gameInput_OnReloadPress()
     {
-        if (currentAmmo > 0)
+        currentAmmo = _maxAmmo;
+        _uiManager.RefreshAmmo(currentAmmo);
+    }
+
+    private void _gameInput_OnShoot()
+    {
+        if (_interact.GetHeldItem() != null && _interact.GetHeldItem().TryGetComponent<PistolLogic>(out PistolLogic logic))
         {
-            audio.PlaySound(AudioManager.SoundType.Shooting);
-            currentAmmo--;
-            _uiManager.RefreshAmmo(currentAmmo);
-            if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, _shootDistance))
+            if (currentAmmo > 0)
             {
-                if (hit.collider.gameObject.CompareTag("Bucket"))
+                _audioManager.PlaySound(AudioManager.SoundType.Shooting);
+                currentAmmo--;
+                _uiManager.RefreshAmmo(currentAmmo);
+                if (Physics.Raycast(_playerCam.transform.position, _playerCam.transform.forward, out RaycastHit hit, _shootDistance))
                 {
-                    OnBucketDestroy?.Invoke(hit.collider.gameObject);
-                }
-                else
-                {
-                    GameObject hole = BulletHolePool.Instance.GetHole();
-                    hole.transform.position = hit.point;
-                    hole.transform.rotation = Quaternion.LookRotation(-hit.normal);
-                    hole.transform.position = hit.point + hit.normal * 0.01f;
+                    if (hit.collider.gameObject.CompareTag("Bucket"))
+                    {
+                        OnBucketDestroy?.Invoke(hit.collider.gameObject);
+                    }
+                    else
+                    {
+                        GameObject hole = BulletHolePool.Instance.GetHole();
+                        hole.transform.position = hit.point;
+                        hole.transform.rotation = Quaternion.LookRotation(-hit.normal);
+                        hole.transform.position = hit.point + hit.normal * 0.01f;
+                    }
                 }
             }
         }
@@ -54,5 +67,11 @@ public class PlayerShoot : MonoBehaviour
     {
         _interact.DestroyPistolPoint();
         _uiManager.DeactivateAmmo();
+    }
+
+    private void OnDestroy()
+    {
+        _gameInput.OnShoot -= _gameInput_OnShoot;
+        _gameInput.OnReloadPress -= _gameInput_OnReloadPress;
     }
 }

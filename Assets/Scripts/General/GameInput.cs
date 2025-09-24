@@ -7,6 +7,7 @@ public class GameInput : MonoBehaviour
     public event Action OnCrouchPress;
     public event Action OnInteractPress;
     public event Action OnShoot;
+    public event Action OnReloadPress;
 
     private InputActions _inputActions;
 
@@ -14,10 +15,25 @@ public class GameInput : MonoBehaviour
     {
         _inputActions = new InputActions();
         _inputActions.Player.Enable();
+    }
+
+    private void OnEnable()
+    {
+        if (_inputActions == null)
+        {
+            _inputActions = new InputActions();
+            _inputActions.Player.Enable();
+        }
 
         _inputActions.Player.Crouch.performed += Crouch_performed;
         _inputActions.Player.Interact.performed += Interact_performed;
         _inputActions.Player.Shoot.performed += Shoot_performed;
+        _inputActions.Player.Reload.performed += Reload_performed;
+    }
+
+    private void Reload_performed(InputAction.CallbackContext obj)
+    {
+        OnReloadPress?.Invoke();
     }
 
     private void Shoot_performed(InputAction.CallbackContext obj)
@@ -50,5 +66,14 @@ public class GameInput : MonoBehaviour
     public bool ShiftIsPressed()
     {
         return _inputActions.Player.Run.IsPressed();
+    }
+
+    private void OnDisable()
+    {
+        _inputActions.Player.Disable();
+        _inputActions.Player.Crouch.performed -= Crouch_performed;
+        _inputActions.Player.Interact.performed -= Interact_performed;
+        _inputActions.Player.Shoot.performed -= Shoot_performed;
+        _inputActions.Player.Reload.performed -= Reload_performed;
     }
 }

@@ -30,8 +30,16 @@ public class PlayerMove : MonoBehaviour
         camOffset = _playerCamera.transform.localPosition;
         isCrouched = false;
         currentState = State.Standing;
+    }
 
+    private void OnEnable()
+    {
         _gameInput.OnCrouchPress += OnCrouchPress;
+    }
+
+    private void OnDisable()
+    {
+        _gameInput.OnCrouchPress -= OnCrouchPress;
     }
 
     private void Update()

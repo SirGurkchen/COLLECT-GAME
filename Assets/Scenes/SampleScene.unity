@@ -2365,6 +2365,9 @@ MonoBehaviour:
     m_Bits: 512
   _gameLogic: {fileID: 1806671790}
   _interact: {fileID: 134471100}
+  _gameInput: {fileID: 1854237833}
+  _audioManager: {fileID: 899109437}
+  _playerCam: {fileID: 2085475739}
 --- !u!4 &138091261 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 840430247334937356, guid: 1ec656124189aca4d81c4282fed2ea07, type: 3}
@@ -38182,7 +38185,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
