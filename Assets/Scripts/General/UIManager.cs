@@ -3,27 +3,29 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI coinsCollected;
-    [SerializeField] private TextMeshProUGUI ammoText;
+    [SerializeField] private TextMeshProUGUI _coinsCollected;
+    [SerializeField] private TextMeshProUGUI _ammoText;
+    [SerializeField] private GameObject _winText;
+    [SerializeField] private GameLogic _gameLogic;
 
-
-    private void Start()
-    {
-        coinsCollected.text = "Collected Coins: 0 / 10";
-    }
 
     public void RefreshCollectedCoins(int newCoins)
     {
-        coinsCollected.text = "Collected Coins: " + newCoins + " / 10";
+        _coinsCollected.text = "Collected Coins: " + newCoins + " / " + _gameLogic.GetMaxCoins();
     }
 
     public void RefreshAmmo(int currentAmmo)
     {
-        ammoText.text = currentAmmo + " / 7";
+        _ammoText.text = currentAmmo + " / 7";
     }
 
     public void DeactivateAmmo()
     {
-        ammoText.text = string.Empty;
+        _ammoText.text = string.Empty;
+    }
+
+    public void ShowWinText()
+    {
+        _winText.SetActive(true);
     }
 }

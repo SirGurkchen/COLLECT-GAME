@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameLogic : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class GameLogic : MonoBehaviour
     private CoinLogic[] coins;
     private List<CoinLogic> _coinsList;
     private int collectedCoins = 0;
+    private const int COINS_ON_MAP = 5;
+
 
     private void Start()
     {
@@ -22,6 +25,8 @@ public class GameLogic : MonoBehaviour
             _coinsList.Add(coin);
             coin.OnCoinCollect += Coin_OnCoinCollect;
         }
+
+        _uiManager.RefreshCollectedCoins(0);
     }
 
     private void Coin_OnCoinCollect()
@@ -29,12 +34,28 @@ public class GameLogic : MonoBehaviour
         collectedCoins++;
         _uiManager.RefreshCollectedCoins(collectedCoins);
         _audioManager.PlaySound(AudioManager.SoundType.Collect);
+
+        if (collectedCoins >= COINS_ON_MAP)
+        {
+            _uiManager.ShowWinText();
+            Invoke("WinGame", 2f);
+        }
     }
 
     public void AddCoin(CoinLogic coin)
     {
         _coinsList.Add(coin);
         coin.OnCoinCollect += Coin_OnCoinCollect;
+    }
+
+    public int GetMaxCoins()
+    {
+        return COINS_ON_MAP;
+    }
+
+    private void WinGame()
+    {
+        SceneManager.LoadScene("StartMenu");
     }
 
     private void OnDisable()
