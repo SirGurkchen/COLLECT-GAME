@@ -2205,9 +2205,25 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9141215731824203713, guid: 8acc5229002597344b55d27ceab3358f, type: 3}
+      propertyPath: _coin
+      value: 
+      objectReference: {fileID: 6447902790612808345, guid: e9fff50c92dfbe746b801fec8d838721, type: 3}
+    - target: {fileID: 9141215731824203713, guid: 8acc5229002597344b55d27ceab3358f, type: 3}
       propertyPath: _outline
       value: 
       objectReference: {fileID: 2041821845}
+    - target: {fileID: 9141215731824203713, guid: 8acc5229002597344b55d27ceab3358f, type: 3}
+      propertyPath: _treeCoin
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9141215731824203713, guid: 8acc5229002597344b55d27ceab3358f, type: 3}
+      propertyPath: _gameLogic
+      value: 
+      objectReference: {fileID: 1806671790}
+    - target: {fileID: 9141215731824203713, guid: 8acc5229002597344b55d27ceab3358f, type: 3}
+      propertyPath: _treeVisual
+      value: 
+      objectReference: {fileID: 1610297381}
     - target: {fileID: 9141215731824203713, guid: 8acc5229002597344b55d27ceab3358f, type: 3}
       propertyPath: _audioManager
       value: 
@@ -2348,6 +2364,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   _gameLogic: {fileID: 1806671790}
+  _interact: {fileID: 134471100}
 --- !u!4 &138091261 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 840430247334937356, guid: 1ec656124189aca4d81c4282fed2ea07, type: 3}
@@ -25399,8 +25416,88 @@ Transform:
   - {fileID: 667754137}
   - {fileID: 1148502829}
   - {fileID: 198454464}
+  - {fileID: 1297958927}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1296235924
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1296235926}
+  - component: {fileID: 1296235925}
+  m_Layer: 0
+  m_Name: BucketManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1296235925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1296235924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21a6611e25bb1de47bdb66654dd34480, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bucketCoinSpawnPoint: {fileID: 1297958927}
+  _logic: {fileID: 1806671790}
+  _coin: {fileID: 6447902790612808345, guid: e9fff50c92dfbe746b801fec8d838721, type: 3}
+  _shootLogic: {fileID: 134471101}
+--- !u!4 &1296235926
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1296235924}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1297958926
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1297958927}
+  m_Layer: 9
+  m_Name: CoinSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1297958927
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1297958926}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.17814745, z: -0, w: 0.9840038}
+  m_LocalPosition: {x: 26.738, y: 0, z: 18.726}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1296069361}
+  m_LocalEulerAnglesHint: {x: 0, y: 20.524, z: 0}
 --- !u!4 &1298842582 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 840430247334937356, guid: 1ec656124189aca4d81c4282fed2ea07, type: 3}
@@ -30018,6 +30115,11 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 840430247334937356, guid: 1ec656124189aca4d81c4282fed2ea07, type: 3}
   m_PrefabInstance: {fileID: 2062286492}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1610297381 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7468316058047327532, guid: 8acc5229002597344b55d27ceab3358f, type: 3}
+  m_PrefabInstance: {fileID: 131762347}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1610343528 stripped
 Transform:
@@ -39574,3 +39676,4 @@ SceneRoots:
   - {fileID: 205627754}
   - {fileID: 1534108706}
   - {fileID: 307569171}
+  - {fileID: 1296235926}

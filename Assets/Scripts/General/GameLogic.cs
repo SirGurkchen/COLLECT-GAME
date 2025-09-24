@@ -9,22 +9,17 @@ public class GameLogic : MonoBehaviour
     [SerializeField] private GameObject _player;
 
     private CoinLogic[] coins;
-    private BucketLogic[] _buckets;
-    private List<BucketLogic> _bucketsList;
+    private List<CoinLogic> _coinsList;
     private int collectedCoins = 0;
 
     private void Start()
     {
-        _bucketsList = new List<BucketLogic>();
-        _buckets = FindObjectsByType<BucketLogic>(FindObjectsSortMode.None);
-        foreach (var bucket in _buckets)
-        {
-            _bucketsList.Add(bucket);
-        }
+        _coinsList = new List<CoinLogic>();
 
         coins = FindObjectsByType<CoinLogic>(FindObjectsSortMode.None);
         foreach (var coin in coins)
         {
+            _coinsList.Add(coin);
             coin.OnCoinCollect += Coin_OnCoinCollect;
         }
     }
@@ -36,16 +31,9 @@ public class GameLogic : MonoBehaviour
         _audioManager.PlaySound(AudioManager.SoundType.Collect);
     }
 
-    public void DestroyBucket(GameObject hitBucket)
+    public void AddCoin(CoinLogic coin)
     {
-        foreach (var bucket in _bucketsList)
-        {
-            if (hitBucket == bucket.gameObject)
-            {
-                bucket.DestroyBucket();
-                _bucketsList.Remove(bucket);
-                break;
-            }
-        }
+        _coinsList.Add(coin);
+        coin.OnCoinCollect += Coin_OnCoinCollect;
     }
 }
