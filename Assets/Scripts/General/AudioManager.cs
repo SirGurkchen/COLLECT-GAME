@@ -28,7 +28,8 @@ public class AudioManager : MonoBehaviour
         Pickup,
         Digging,
         Cutting,
-        Shooting
+        Shooting,
+        Bucket
     }
 
     private void Awake()
@@ -95,6 +96,7 @@ public class AudioManager : MonoBehaviour
             case SoundType.Collect:
                 _coinCollectSource.PlayOneShot(_soundDic[soundType]);
                 break;
+            case SoundType.Bucket:
             case SoundType.Cutting:
                 _woodCutAudioSource.PlayOneShot(_soundDic[soundType]);
                 break;

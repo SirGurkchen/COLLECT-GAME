@@ -1,12 +1,18 @@
+using System;
 using UnityEngine;
 
 public class PlayerShoot : MonoBehaviour
 {
+    public event Action OnBucketHit;
+
     [SerializeField] private UIManager _uiManager;
     [SerializeField] private float _shootDistance = 20f;
     [SerializeField] private int _maxAmmo = 7;
+    [SerializeField] private LayerMask _bucketMask;
 
     private int currentAmmo;
+
+    private const int BUCKET_MASK_NUMBER = 9;
 
     private void Start()
     {
@@ -22,10 +28,17 @@ public class PlayerShoot : MonoBehaviour
             _uiManager.RefreshAmmo(currentAmmo);
             if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, _shootDistance))
             {
-                GameObject hole = BulletHolePool.Instance.GetHole();
-                hole.transform.position = hit.point;
-                hole.transform.rotation = Quaternion.LookRotation(-hit.normal);
-                hole.transform.position = hit.point + hit.normal * 0.01f;
+                if (hit.collider.gameObject.layer == BUCKET_MASK_NUMBER)
+                {
+                    OnBucketHit?.Invoke();
+                }
+                else
+                {
+                    GameObject hole = BulletHolePool.Instance.GetHole();
+                    hole.transform.position = hit.point;
+                    hole.transform.rotation = Quaternion.LookRotation(-hit.normal);
+                    hole.transform.position = hit.point + hit.normal * 0.01f;
+                }
             }
         }
     }
