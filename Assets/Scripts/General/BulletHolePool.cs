@@ -5,11 +5,10 @@ public class BulletHolePool : MonoBehaviour
 {
     public static BulletHolePool Instance;
 
-    [SerializeField] private GameObject bulletHole;
+    [SerializeField] private GameObject _bulletHole;
+    [SerializeField] private int _poolSize = 15;
 
-    [SerializeField] private int poolSize = 15;
-
-    private Queue<GameObject> holeQueue = new Queue<GameObject>();
+    private Queue<GameObject> _holeQueue = new Queue<GameObject>();
 
     private void Awake()
     {
@@ -22,35 +21,35 @@ public class BulletHolePool : MonoBehaviour
             Destroy(gameObject);
         }
 
-        CreatePool(poolSize);
+        CreatePool(_poolSize);
     }
 
     private void CreatePool(int size)
     {
         for (int i = 0; i < size; i++)
         {
-            var obj = Instantiate(bulletHole);
+            var obj = Instantiate(_bulletHole);
             obj.SetActive(false);
-            holeQueue.Enqueue(obj);
+            _holeQueue.Enqueue(obj);
         }
     }
 
     public GameObject GetHole()
     {
-        if (holeQueue.Count > 0)
+        if (_holeQueue.Count > 0)
         {
-            var hole = holeQueue.Dequeue();
+            var hole = _holeQueue.Dequeue();
             hole.SetActive(true);
             StartCoroutine(hole.GetComponent<BulletHoleLogic>().BulletHoleDecay());
             return hole;
         }
         else
         {
-            poolSize++;
-            var obj = Instantiate(bulletHole);
+            _poolSize++;
+            var obj = Instantiate(_bulletHole);
             obj.SetActive(false);
-            holeQueue.Enqueue(obj);
-            var hole = holeQueue.Dequeue();
+            _holeQueue.Enqueue(obj);
+            var hole = _holeQueue.Dequeue();
             hole.SetActive(true);
             StartCoroutine(hole.GetComponent<BulletHoleLogic>().BulletHoleDecay());
             return hole;
@@ -60,6 +59,6 @@ public class BulletHolePool : MonoBehaviour
     public void ReturnBullet(GameObject obj)
     {
         obj.SetActive(false);
-        holeQueue.Enqueue(obj);
+        _holeQueue.Enqueue(obj);
     }
 }

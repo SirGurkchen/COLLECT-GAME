@@ -6,11 +6,11 @@ public class MainMenuCoin : MonoBehaviour
     [SerializeField] private float _floatSpeed;
     [SerializeField] private float _floatHeight;
 
-    private Vector3 startPos;
+    private Vector3 _startPos;
 
     private void Start()
     {
-        startPos = transform.position;
+        _startPos = transform.position;
     }
 
     private void Update()
@@ -26,7 +26,7 @@ public class MainMenuCoin : MonoBehaviour
 
     private void FloatCoin()
     {
-        float newY = startPos.y + Mathf.Sin(Time.time * _floatSpeed) * _floatHeight;
-        transform.position = new Vector3(startPos.x, newY, startPos.z);
+        float newY = _startPos.y + Mathf.Sin(Time.time * _floatSpeed) * _floatHeight;
+        transform.position = new Vector3(_startPos.x, newY, _startPos.z);
     }
 }

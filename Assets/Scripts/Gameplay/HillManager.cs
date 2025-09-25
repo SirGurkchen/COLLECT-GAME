@@ -18,4 +18,9 @@ public class HillManager : MonoBehaviour
         _shovel.SetActive(true);
         _audioManager.PlaySound(AudioManager.SoundType.Rocks);
     }
+
+    private void OnDestroy()
+    {
+        _hillCoin.OnHillCoinCollect -= HillCoin_OnHillCoinCollect;
+    }
 }

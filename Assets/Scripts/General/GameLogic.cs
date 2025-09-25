@@ -9,18 +9,17 @@ public class GameLogic : MonoBehaviour
     [SerializeField] private AudioManager _audioManager;
     [SerializeField] private GameObject _player;
 
-    private CoinLogic[] coins;
+    private CoinLogic[] _coins;
     private List<CoinLogic> _coinsList;
-    private int collectedCoins = 0;
+    private int _collectedCoins = 0;
     private const int COINS_ON_MAP = 5;
-
 
     private void Start()
     {
         _coinsList = new List<CoinLogic>();
 
-        coins = FindObjectsByType<CoinLogic>(FindObjectsSortMode.None);
-        foreach (var coin in coins)
+        _coins = FindObjectsByType<CoinLogic>(FindObjectsSortMode.None);
+        foreach (var coin in _coins)
         {
             _coinsList.Add(coin);
             coin.OnCoinCollect += Coin_OnCoinCollect;
@@ -31,11 +30,11 @@ public class GameLogic : MonoBehaviour
 
     private void Coin_OnCoinCollect()
     {
-        collectedCoins++;
-        _uiManager.RefreshCollectedCoins(collectedCoins);
+        _collectedCoins++;
+        _uiManager.RefreshCollectedCoins(_collectedCoins);
         _audioManager.PlaySound(AudioManager.SoundType.Collect);
 
-        if (collectedCoins >= COINS_ON_MAP)
+        if (_collectedCoins >= COINS_ON_MAP)
         {
             _uiManager.ShowWinText();
             Invoke("WinGame", 2f);

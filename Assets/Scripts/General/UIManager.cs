@@ -5,6 +5,7 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _coinsCollected;
     [SerializeField] private TextMeshProUGUI _ammoText;
+    [SerializeField] private TextMeshProUGUI _shotBuckets;
     [SerializeField] private GameObject _winText;
     [SerializeField] private GameLogic _gameLogic;
 
@@ -27,5 +28,15 @@ public class UIManager : MonoBehaviour
     public void ShowWinText()
     {
         _winText.SetActive(true);
+    }
+
+    public void RefreshShotBuckets(int currentBuckets)
+    {
+        _shotBuckets.text = currentBuckets + " | 5";
+    }
+
+    public void DisableShotBuckets()
+    {
+        _shotBuckets.text = string.Empty;
     }
 }

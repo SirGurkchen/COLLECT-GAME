@@ -29,7 +29,9 @@ public class AudioManager : MonoBehaviour
         Digging,
         Cutting,
         Shooting,
-        Bucket
+        Bucket,
+        Reload,
+        Empty
     }
 
     private void Awake()
@@ -90,6 +92,8 @@ public class AudioManager : MonoBehaviour
                 _rocksAudioSource.PlayOneShot(_soundDic[soundType]);
                 break;
             case SoundType.Shooting:
+            case SoundType.Reload:
+            case SoundType.Empty:
             case SoundType.Pickup:
                 _interactAudioSource.PlayOneShot(_soundDic[soundType]);
                 break;

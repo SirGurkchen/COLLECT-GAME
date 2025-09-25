@@ -7,7 +7,9 @@ public class BucketManager : MonoBehaviour
     [SerializeField] private GameLogic _logic;
     [SerializeField] private GameObject _coin;
     [SerializeField] private PlayerShoot _shootLogic;
+    [SerializeField] private UIManager _uiManager;
 
+    private int _shotBuckets = 0;
     private BucketLogic[] _buckets;
     private List<BucketLogic> _bucketsList;
     
@@ -29,8 +31,10 @@ public class BucketManager : MonoBehaviour
         {
             if (obj == _bucketsList[i].gameObject)
             {
+                _shotBuckets++;
                 _bucketsList.RemoveAt(i);
                 obj.GetComponentInChildren<BucketLogic>().DestroyBucket(obj);
+                _uiManager.RefreshShotBuckets(_shotBuckets);
                 break;
             }
         }
@@ -46,5 +50,10 @@ public class BucketManager : MonoBehaviour
 
             _shootLogic.DestroyWeapon();
         }
+    }
+
+    private void OnDestroy()
+    {
+        _shootLogic.OnBucketDestroy -= _shootLogic_OnBucketDestroy;
     }
 }
