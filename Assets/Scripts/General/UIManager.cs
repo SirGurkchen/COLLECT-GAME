@@ -32,7 +32,7 @@ public class UIManager : MonoBehaviour
 
     public void RefreshShotBuckets(int currentBuckets)
     {
-        _shotBuckets.text = currentBuckets + " | 5";
+        _shotBuckets.text = "Buckets: " + currentBuckets + " | 5";
     }
 
     public void DisableShotBuckets()

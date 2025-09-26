@@ -26,7 +26,7 @@ public class PlayerShoot : MonoBehaviour
 
     private void _gameInput_OnReloadPress()
     {
-        if (_currentAmmo <  _maxAmmo)
+        if (_currentAmmo <  _maxAmmo && _interact.GetHeldItem() != null && _interact.GetHeldItem().TryGetComponent<PistolLogic>(out PistolLogic logic))
         {
             _audioManager.PlaySound(AudioManager.SoundType.Reload);
             _currentAmmo = _maxAmmo;
