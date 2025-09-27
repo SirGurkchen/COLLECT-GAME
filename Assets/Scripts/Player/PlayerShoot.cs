@@ -69,6 +69,7 @@ public class PlayerShoot : MonoBehaviour
     {
         _uiManager.RefreshAmmo(_currentAmmo);
         _uiManager.RefreshShotBuckets(0);
+        _uiManager.ShowShootControls();
     }
 
     public void DestroyWeapon()

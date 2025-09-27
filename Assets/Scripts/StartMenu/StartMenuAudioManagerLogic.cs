@@ -12,13 +12,15 @@ public class MenuSound
 public class StartMenuAudioManagerLogic : MonoBehaviour
 {
     [SerializeField] private AudioSource _menuSoundSource;
+    [SerializeField] private AudioSource _menuMusicSource;
     [SerializeField] private List<MenuSound> _menuSounds;
 
     private Dictionary<MenuSoundType, AudioClip> _soundDic;
 
     public enum MenuSoundType
     {
-        ButtonClick
+        ButtonClick,
+        Music
     }
 
     private void Awake()
@@ -27,6 +29,13 @@ public class StartMenuAudioManagerLogic : MonoBehaviour
         {
             BuildDictionary();
         }
+    }
+
+    private void Start()
+    {
+        _menuMusicSource.clip = _soundDic[MenuSoundType.Music];
+        _menuMusicSource.loop = true;
+        _menuMusicSource.Play();
     }
 
     private void BuildDictionary()

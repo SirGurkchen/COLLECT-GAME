@@ -8,11 +8,16 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _shotBuckets;
     [SerializeField] private GameObject _winText;
     [SerializeField] private GameLogic _gameLogic;
-
+    [SerializeField] private GameObject _shootPrompts;
 
     public void RefreshCollectedCoins(int newCoins)
     {
         _coinsCollected.text = "Collected Coins: " + newCoins + " / " + _gameLogic.GetMaxCoins();
+    }
+
+    public void ShowShootControls()
+    {
+        _shootPrompts.SetActive(true);
     }
 
     public void RefreshAmmo(int currentAmmo)
@@ -23,6 +28,7 @@ public class UIManager : MonoBehaviour
     public void DeactivateAmmo()
     {
         _ammoText.text = string.Empty;
+        _shootPrompts.SetActive(false);
     }
 
     public void ShowWinText()
