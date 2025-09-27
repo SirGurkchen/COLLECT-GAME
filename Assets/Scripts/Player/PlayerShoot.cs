@@ -8,7 +8,6 @@ public class PlayerShoot : MonoBehaviour
     [SerializeField] private UIManager _uiManager;
     [SerializeField] private float _shootDistance = 20f;
     [SerializeField] private int _maxAmmo = 7;
-    [SerializeField] private GameLogic _gameLogic;
     [SerializeField] private PlayerInteract _interact;
     [SerializeField] private GameInput _gameInput;
     [SerializeField] private AudioManager _audioManager;
@@ -36,7 +35,7 @@ public class PlayerShoot : MonoBehaviour
 
     private void _gameInput_OnShoot()
     {
-        if (_interact.GetHeldItem() != null && _interact.GetHeldItem().TryGetComponent<PistolLogic>(out PistolLogic logic))
+        if (_interact.GetHeldItem() != null && _interact.GetHeldItem().GetComponent<PistolLogic>() != null)
         {
             if (_currentAmmo > 0)
             {
@@ -74,7 +73,7 @@ public class PlayerShoot : MonoBehaviour
 
     public void DestroyWeapon()
     {
-        _interact.DestroyPistolPoint();
+        Destroy(_interact.GetHeldItem());
         _uiManager.DeactivateAmmo();
         _uiManager.DisableShotBuckets();
     }

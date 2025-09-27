@@ -107,9 +107,4 @@ public class PlayerInteract : MonoBehaviour
     {
         return _heldObject;
     }
-
-    public void DestroyPistolPoint()
-    {
-        Destroy(_pistolPoint.gameObject);
-    }
 }

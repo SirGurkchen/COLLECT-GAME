@@ -76,4 +76,12 @@ public class GameInput : MonoBehaviour
         _inputActions.Player.Shoot.performed -= Shoot_performed;
         _inputActions.Player.Reload.performed -= Reload_performed;
     }
+
+    private void OnDestroy()
+    {
+        OnCrouchPress = null;
+        OnInteractPress = null;
+        OnShoot = null;
+        OnReloadPress = null;
+    }
 }

@@ -6,7 +6,6 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private GameInput _gameInput;
     [SerializeField] private Camera _playerCamera;
     [SerializeField] private AudioManager _audioManager;
-    [SerializeField] private CapsuleCollider _capsuleCollider;
     [SerializeField] private PlayerInteract _interact;
     [SerializeField] private float _defaultMoveSpeed = 5f;
     [SerializeField] private float _shiftMoveSpeed = 8f;
@@ -151,7 +150,6 @@ public class PlayerMove : MonoBehaviour
         _isCrouched = false;
         transform.localScale = new Vector3(transform.localScale.x, 1f, transform.localScale.z);
         transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
-        _capsuleCollider.height = 2;
         _moveSpeed = _defaultMoveSpeed;
     }
 }

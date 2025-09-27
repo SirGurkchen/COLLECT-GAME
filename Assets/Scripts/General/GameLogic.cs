@@ -7,7 +7,6 @@ public class GameLogic : MonoBehaviour
 {
     [SerializeField] private UIManager _uiManager;
     [SerializeField] private AudioManager _audioManager;
-    [SerializeField] private GameObject _player;
 
     private CoinLogic[] _coins;
     private List<CoinLogic> _coinsList;
